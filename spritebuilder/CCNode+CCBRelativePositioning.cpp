@@ -5,9 +5,26 @@ using namespace cocos2d;
 
 namespace spritebuilder {
 
-Point getAbsolutePosition(const Point &pt, CCBReader::PositionType type, const Size &containerSize, const char *propName)
+Point getAbsolutePosition(Point pt, CCBReader::PositionType type, CCBReader::PositionUnit xUnit, CCBReader::PositionUnit yUnit, const Size &containerSize, const char *propName)
 {
     Point absPt = Point(0,0);
+
+	if (xUnit == CCBReader::PositionUnit::NORMALIZED) {
+		pt.x = static_cast<int>(containerSize.width * pt.x);
+	}
+	else if (xUnit == CCBReader::PositionUnit::SCALED) {
+		float resolutionScale = CCBReader::getResolutionScale();
+		pt.x = containerSize.width * resolutionScale;
+	}
+
+	if (yUnit == CCBReader::PositionUnit::NORMALIZED) {
+		pt.y = static_cast<int>(containerSize.height * pt.y);
+	}
+	else if (yUnit == CCBReader::PositionUnit::SCALED) {
+		float resolutionScale = CCBReader::getResolutionScale();
+		pt.y = containerSize.height * resolutionScale;
+	}
+
     if (type == CCBReader::PositionType::RELATIVE_BOTTOM_LEFT)
     {
         absPt = pt;
@@ -27,6 +44,7 @@ Point getAbsolutePosition(const Point &pt, CCBReader::PositionType type, const S
         absPt.x = containerSize.width - pt.x;
         absPt.y = pt.y;
     }
+	/*
     else if (type == CCBReader::PositionType::PERCENT)
     {
         absPt.x = (int)(containerSize.width * pt.x / 100.0f);
@@ -39,6 +57,7 @@ Point getAbsolutePosition(const Point &pt, CCBReader::PositionType type, const S
         absPt.x = pt.x * resolutionScale;
         absPt.y = pt.y * resolutionScale;
     }
+	*/
     
     return absPt;
 }

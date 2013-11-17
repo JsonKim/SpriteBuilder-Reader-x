@@ -376,7 +376,9 @@ ActionInterval* CCBAnimationManager::getAction(CCBKeyframe *pKeyframe0, CCBKeyfr
     {
         // Get position type
         Array *array = static_cast<Array*>(getBaseValue(pNode, propName));
-        CCBReader::PositionType type = (CCBReader::PositionType)((CCBValue*)array->getObjectAtIndex(2))->getIntValue();
+        CCBReader::PositionType corner = static_cast<CCBReader::PositionType>(((CCBValue*)array->getObjectAtIndex(2))->getIntValue());
+		CCBReader::PositionUnit xUnit = static_cast<CCBReader::PositionUnit>(((CCBValue*)array->getObjectAtIndex(3))->getIntValue());
+		CCBReader::PositionUnit yUnit = static_cast<CCBReader::PositionUnit>(((CCBValue*)array->getObjectAtIndex(4))->getIntValue());
         
         // Get relative position
         Array *value = static_cast<Array*>(pKeyframe1->getValue());
@@ -385,7 +387,7 @@ ActionInterval* CCBAnimationManager::getAction(CCBKeyframe *pKeyframe0, CCBKeyfr
         
         Size containerSize = getContainerSize(pNode->getParent());
         
-        Point absPos = getAbsolutePosition(Point(x,y), type, containerSize, propName);
+        Point absPos = getAbsolutePosition(Point(x,y), corner, xUnit, yUnit, containerSize, propName);
         
         return MoveTo::create(duration, absPos);
     }
@@ -449,14 +451,16 @@ void CCBAnimationManager::setAnimatedProperty(const char *propName, Node *pNode,
         {
             // Get position type
             Array *array = (Array*)getBaseValue(pNode, propName);
-            CCBReader::PositionType type = (CCBReader::PositionType)((CCBValue*)array->getObjectAtIndex(2))->getIntValue();
-            
+			CCBReader::PositionType corner = static_cast<CCBReader::PositionType>(((CCBValue*)array->getObjectAtIndex(2))->getIntValue());
+			CCBReader::PositionUnit xUnit = static_cast<CCBReader::PositionUnit>(((CCBValue*)array->getObjectAtIndex(3))->getIntValue());
+			CCBReader::PositionUnit yUnit = static_cast<CCBReader::PositionUnit>(((CCBValue*)array->getObjectAtIndex(4))->getIntValue());
+
             // Get relative position
             Array *value = (Array*)pValue;
             float x = ((CCBValue*)value->getObjectAtIndex(0))->getFloatValue();
             float y = ((CCBValue*)value->getObjectAtIndex(1))->getFloatValue();
             
-            pNode->setPosition(getAbsolutePosition(Point(x,y), type, getContainerSize(pNode->getParent()), propName));
+            pNode->setPosition(getAbsolutePosition(Point(x,y), corner, xUnit, yUnit, getContainerSize(pNode->getParent()), propName));
         }
         else if (strcmp(propName, "scale") == 0)
         {

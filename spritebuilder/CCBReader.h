@@ -123,9 +123,14 @@ public:
         RELATIVE_BOTTOM_LEFT,
         RELATIVE_TOP_LEFT,
         RELATIVE_TOP_RIGHT,
-        RELATIVE_BOTTOM_RIGHT,
-        PERCENT,
-        MULTIPLY_RESOLUTION,
+        RELATIVE_BOTTOM_RIGHT
+    };
+
+	enum class PositionUnit
+    {
+        POINTS,
+        SCALED,
+        NORMALIZED
     };
     
     enum class SizeType

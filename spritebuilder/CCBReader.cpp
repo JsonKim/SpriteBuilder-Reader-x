@@ -399,7 +399,7 @@ bool CCBReader::readHeader()
     }
 
     // Read JS check
-    _jsControlled = this->readBool();
+    _jsControlled = false; // this->readBool();
     _actionManager->_jsControlled = _jsControlled;
 
     return true;
@@ -741,7 +741,7 @@ Node * CCBReader::readNodeGraph(Node * pParent)
     delete _animatedProps;
     _animatedProps = NULL;
 
-	BOOL hasPhysicsBody = this->readBool();
+	bool hasPhysicsBody = this->readBool();
 	if (hasPhysicsBody)
 	{
 		// Read body shape
@@ -773,9 +773,9 @@ Node * CCBReader::readNodeGraph(Node * pParent)
 		}
 		*/
         
-		BOOL dynamic = this->readBool();
-		BOOL affectedByGravity = this->readBool();
-		BOOL allowsRotation = this->readBool();
+		bool dynamic = this->readBool();
+		bool affectedByGravity = this->readBool();
+		bool allowsRotation = this->readBool();
         
 		/*
 		if (dynamic) body.type = CCPhysicsBodyTypeDynamic;

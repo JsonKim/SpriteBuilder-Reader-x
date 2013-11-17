@@ -51,7 +51,7 @@ void NodeLoader::parseProperties(Node * pNode, Node * pParent, CCBReader * ccbRe
         // Check if the property can be set for this platform
         bool setProp = false;
         
-        CCBReader::PlatformType platform = (CCBReader::PlatformType)ccbReader->readByte();
+        CCBReader::PlatformType platform = CCBReader::PlatformType::ALL; // (CCBReader::PlatformType)ccbReader->readByte();
         if(platform == CCBReader::PlatformType::ALL)
         {
             setProp = true;
@@ -381,25 +381,22 @@ Point NodeLoader::parsePropTypePosition(Node * pNode, Node * pParent, CCBReader 
 {
     float x = ccbReader->readFloat();
     float y = ccbReader->readFloat();
-	int corner = ccbReader->readByte();
-	int xUnit = ccbReader->readByte();
-	int yUnit = ccbReader->readByte();
-    
-	CCBReader::PositionType type = static_cast<CCBReader::PositionType>(corner);
-    // CCBReader::PositionType type = static_cast<CCBReader::PositionType>(ccbReader->readInt(false));
+	CCBReader::PositionType corner = static_cast<CCBReader::PositionType>(ccbReader->readByte());
+	CCBReader::PositionUnit xUnit = static_cast<CCBReader::PositionUnit>(ccbReader->readByte());
+	CCBReader::PositionUnit yUnit = static_cast<CCBReader::PositionUnit>(ccbReader->readByte());
     
     Size containerSize = ccbReader->getAnimationManager()->getContainerSize(pParent);
     
-    Point pt = getAbsolutePosition(Point(x,y), type, containerSize, pPropertyName);
-    pNode->setPosition(pt);
+    Point pt = getAbsolutePosition(Point(x,y), corner, xUnit, yUnit, containerSize, pPropertyName);
+    // pNode->setPosition(pt);
     
     if (ccbReader->getAnimatedProperties()->find(pPropertyName) != ccbReader->getAnimatedProperties()->end())
     {
         Array *baseValue = Array::create(CCBValue::create(x),
                                              CCBValue::create(y),
-                                             CCBValue::create((int)type),
-											 CCBValue::create((int)xUnit),
-											 CCBValue::create((int)yUnit),
+                                             CCBValue::create(static_cast<int>(corner)),
+											 CCBValue::create(static_cast<int>(xUnit)),
+											 CCBValue::create(static_cast<int>(yUnit)),
                                              NULL);
         ccbReader->getAnimationManager()->setBaseValue(baseValue, pNode, pPropertyName);
     }
