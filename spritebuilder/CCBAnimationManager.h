@@ -1,5 +1,5 @@
-#ifndef __CCB_CCBANIMATION_MANAGER_H__
-#define __CCB_CCBANIMATION_MANAGER_H__
+#ifndef __SB_CCBANIMATION_MANAGER_H__
+#define __SB_CCBANIMATION_MANAGER_H__
 
 #include "cocos2d.h"
 #include "extensions/ExtensionMacros.h"
@@ -264,4 +264,4 @@ public:
 
 }
 
-#endif // __CCB_CCBANIMATION_MANAGER_H__
+#endif // __SB_CCBANIMATION_MANAGER_H__

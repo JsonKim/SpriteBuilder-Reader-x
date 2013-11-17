@@ -1,5 +1,5 @@
-#ifndef _CCB_CCLABELTTFLOADER_H_
-#define _CCB_CCLABELTTFLOADER_H_
+#ifndef _SB_CCLABELTTFLOADER_H_
+#define _SB_CCLABELTTFLOADER_H_
 
 #include "CCNodeLoader.h"
 
@@ -15,12 +15,14 @@ public:
      * @lua NA
      */
     virtual ~LabelTTFLoader() {};
-    CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(LabelTTFLoader, loader);
+    SB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(LabelTTFLoader, loader);
 
 protected:
-    CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(cocos2d::LabelTTF);
+    SB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(cocos2d::LabelTTF);
 
+	virtual void onHandlePropTypePosition(cocos2d::Node * pNode, cocos2d::Node * pParent, const char * pPropertyName, cocos2d::Point pPosition, CCBReader * ccbReader);
     virtual void onHandlePropTypeColor3(cocos2d::Node * pNode, cocos2d::Node * pParent, const char * pPropertyName, cocos2d::Color3B pColor3B, CCBReader * ccbReader);
+	virtual void onHandlePropTypeColor4(cocos2d::Node * pNode, cocos2d::Node * pParent, const char * pPropertyName, cocos2d::Color4B pColor4B, CCBReader * ccbReader);
     virtual void onHandlePropTypeByte(cocos2d::Node * pNode, cocos2d::Node * pParent, const char * pPropertyName, unsigned char pByte, CCBReader * ccbReader);
     virtual void onHandlePropTypeBlendFunc(cocos2d::Node * pNode, cocos2d::Node * pParent, const char * pPropertyName, cocos2d::BlendFunc pBlendFunc, CCBReader * ccbReader);
     virtual void onHandlePropTypeFontTTF(cocos2d::Node * pNode, cocos2d::Node * pParent, const char * pPropertyName, const char * pFontTTF, CCBReader * ccbReader);

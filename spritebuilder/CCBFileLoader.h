@@ -1,5 +1,5 @@
-#ifndef _CCB_CCBFILELOADER_H_
-#define _CCB_CCBFILELOADER_H_
+#ifndef _SB_CCBFILELOADER_H_
+#define _SB_CCBFILELOADER_H_
 
 #include "CCNodeLoader.h"
 #include "CCBReader.h"
@@ -20,10 +20,10 @@ class CCBFileLoader : public NodeLoader {
          * @js NA
          * @lua NA
          */
-        CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCBFileLoader, loader);
+        SB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(CCBFileLoader, loader);
 
     protected:
-        CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(CCBFile);
+        SB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(CCBFile);
 
         virtual void onHandlePropTypeCCBFile(cocos2d::Node * pNode, cocos2d::Node * pParent, const char * pPropertyName, cocos2d::Node * pCCBFileNode, CCBReader * ccbReader);
 };

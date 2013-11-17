@@ -1,5 +1,5 @@
-#ifndef _CCB_CCPARTICLESYSTEMQUADLOADER_H_
-#define _CCB_CCPARTICLESYSTEMQUADLOADER_H_
+#ifndef _SB_CCPARTICLESYSTEMQUADLOADER_H_
+#define _SB_CCPARTICLESYSTEMQUADLOADER_H_
 
 #include "CCNodeLoader.h"
 
@@ -19,14 +19,14 @@ public:
      * @js NA
      * @lua NA
      */
-    CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(spritebuilder::ParticleSystemQuadLoader, loader);
+    SB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(spritebuilder::ParticleSystemQuadLoader, loader);
 
 protected:
     /**
      * @js NA
      * @lua NA
      */
-    CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(cocos2d::ParticleSystemQuad);
+    SB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(cocos2d::ParticleSystemQuad);
     /**
      * @js NA
      * @lua NA

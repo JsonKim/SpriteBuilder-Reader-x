@@ -1,5 +1,5 @@
-#ifndef _CCB_CCSCALE9SPRITELOADER_H_
-#define _CCB_CCSCALE9SPRITELOADER_H_
+#ifndef _SB_CCSCALE9SPRITELOADER_H_
+#define _SB_CCSCALE9SPRITELOADER_H_
 
 #include "CCNodeLoader.h"
 #include "CCScale9SpriteLoader.h"
@@ -21,7 +21,7 @@ public:
      * @js NA
      * @lua NA
      */
-    CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(Scale9SpriteLoader, loader);
+    SB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(Scale9SpriteLoader, loader);
 
 protected:
     /**

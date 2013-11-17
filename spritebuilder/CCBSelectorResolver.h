@@ -1,5 +1,5 @@
-#ifndef _CCB_CCBSELECTORRESOLVER_H_
-#define _CCB_CCBSELECTORRESOLVER_H_
+#ifndef _SB_CCBSELECTORRESOLVER_H_
+#define _SB_CCBSELECTORRESOLVER_H_
 
 #include "cocos2d.h"
 #include "extensions//GUI/CCControlExtension/CCInvocation.h"
@@ -7,15 +7,15 @@
 
 namespace spritebuilder {
 
-#define CCB_SELECTORRESOLVER_CCMENUITEM_GLUE(TARGET, SELECTORNAME, METHOD) if(pTarget == TARGET && strcmp(pSelectorName, SELECTORNAME) == 0) { \
+#define SB_SELECTORRESOLVER_CCMENUITEM_GLUE(TARGET, SELECTORNAME, METHOD) if(pTarget == TARGET && strcmp(pSelectorName, SELECTORNAME) == 0) { \
     return menu_selector(METHOD); \
 }
 
-#define CCB_SELECTORRESOLVER_CCCONTROL_GLUE(TARGET, SELECTORNAME, METHOD) if(pTarget == TARGET && strcmp(pSelectorName, SELECTORNAME) == 0) { \
+#define SB_SELECTORRESOLVER_CCCONTROL_GLUE(TARGET, SELECTORNAME, METHOD) if(pTarget == TARGET && strcmp(pSelectorName, SELECTORNAME) == 0) { \
     return cccontrol_selector(METHOD); \
 }
 
-#define CCB_SELECTORRESOLVER_CALLFUNC_GLUE(TARGET, SELECTORNAME, METHOD) if(pTarget == TARGET && strcmp(pSelectorName, SELECTORNAME) == 0) { \
+#define SB_SELECTORRESOLVER_CALLFUNC_GLUE(TARGET, SELECTORNAME, METHOD) if(pTarget == TARGET && strcmp(pSelectorName, SELECTORNAME) == 0) { \
     return callfuncN_selector(METHOD); \
 }
 

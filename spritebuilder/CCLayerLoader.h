@@ -1,5 +1,5 @@
-#ifndef _CCB_CCLAYERLOADER_H_
-#define _CCB_CCLAYERLOADER_H_
+#ifndef _SB_CCLAYERLOADER_H_
+#define _SB_CCLAYERLOADER_H_
 
 #include "CCNodeLoader.h"
 
@@ -15,10 +15,10 @@ public:
      * @lua NA
      */
     virtual ~LayerLoader() {};
-    CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(LayerLoader, loader);
+    SB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(LayerLoader, loader);
 
 protected:
-    CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(cocos2d::Layer);
+    SB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(cocos2d::Layer);
 
     virtual void onHandlePropTypeCheck(cocos2d::Node * pNode, cocos2d::Node * pParent, const char * pPropertyName, bool pCheck, CCBReader * ccbReader);
 };

@@ -1,5 +1,5 @@
-#ifndef _CCB_CCLABELBMFONTLOADER_H_
-#define _CCB_CCLABELBMFONTLOADER_H_
+#ifndef _SB_CCLABELBMFONTLOADER_H_
+#define _SB_CCLABELBMFONTLOADER_H_
 
 #include "CCNodeLoader.h"
 
@@ -15,10 +15,10 @@ public:
      * @lua NA
      */
     virtual ~LabelBMFontLoader() {};
-    CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(LabelBMFontLoader, loader);
+    SB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(LabelBMFontLoader, loader);
 
 protected:
-    CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(cocos2d::LabelBMFont);
+    SB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(cocos2d::LabelBMFont);
 
     virtual void onHandlePropTypeColor3(cocos2d::Node * pNode, cocos2d::Node * pParent, const char * pPropertyName, cocos2d::Color3B pColor3B, CCBReader * ccbReader);
     virtual void onHandlePropTypeByte(cocos2d::Node * pNode, cocos2d::Node * pParent, const char * pPropertyName, unsigned char pByte, CCBReader * ccbReader);

@@ -1,5 +1,5 @@
-#ifndef __CCB_CCSEQUENCE_H__
-#define __CCB_CCSEQUENCE_H__
+#ifndef _SB_CCSEQUENCE_H__
+#define _SB_CCSEQUENCE_H__
 
 #include <string>
 #include "cocos2d.h"
@@ -47,4 +47,4 @@ private:
 }
 
 
-#endif // __CCB_CCSEQUENCE_H__
+#endif // _SB_CCSEQUENCE_H__

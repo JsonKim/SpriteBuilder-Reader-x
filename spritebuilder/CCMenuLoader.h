@@ -1,5 +1,5 @@
-#ifndef _CCB_CCMENULOADER_H_
-#define _CCB_CCMENULOADER_H_
+#ifndef _SB_CCMENULOADER_H_
+#define _SB_CCMENULOADER_H_
 
 #include "CCLayerLoader.h"
 
@@ -19,10 +19,10 @@ public:
      * @js NA
      * @lua NA
      */
-    CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(MenuLoader, loader);
+    SB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(MenuLoader, loader);
 
 protected:
-    CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(cocos2d::Menu);
+    SB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(cocos2d::Menu);
 };
 
 }

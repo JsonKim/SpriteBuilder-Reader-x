@@ -40,7 +40,7 @@ void NodeLoaderLibrary::registerDefaultNodeLoaders() {
     this->registerNodeLoader("CCBFile", CCBFileLoader::loader());
     this->registerNodeLoader("CCMenu", MenuLoader::loader());
     this->registerNodeLoader("CCMenuItemImage", MenuItemImageLoader::loader());
-    this->registerNodeLoader("CCControlButton", ControlButtonLoader::loader());
+    this->registerNodeLoader("CCButton", ControlButtonLoader::loader());
     this->registerNodeLoader("CCParticleSystemQuad", ParticleSystemQuadLoader::loader());
 }
 

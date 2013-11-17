@@ -1,5 +1,5 @@
-#ifndef _CCB_CCNODELOADERLIBRARY_H_
-#define _CCB_CCNODELOADERLIBRARY_H_
+#ifndef _SB_CCNODELOADERLIBRARY_H_
+#define _SB_CCNODELOADERLIBRARY_H_
 
 #include "cocos2d.h"
 #include "CCBReader.h"
@@ -18,7 +18,7 @@ public:
      * @js NA
      * @lua NA
      */
-    CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(NodeLoaderLibrary, library);
+    SB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(NodeLoaderLibrary, library);
     /**
      * @js NA
      * @lua NA

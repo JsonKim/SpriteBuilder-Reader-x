@@ -1,5 +1,5 @@
-#ifndef _CCB_CCMENUITEMIMAGELOADER_H_
-#define _CCB_CCMENUITEMIMAGELOADER_H_
+#ifndef _SB_CCMENUITEMIMAGELOADER_H_
+#define _SB_CCMENUITEMIMAGELOADER_H_
 
 #include "CCMenuItemLoader.h"
 
@@ -19,14 +19,14 @@ public:
      * @js NA
      * @lua NA
      */
-    CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(MenuItemImageLoader, loader);
+    SB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(MenuItemImageLoader, loader);
 
 protected:
     /**
      * @js NA
      * @lua NA
      */
-    CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(cocos2d::MenuItemImage);
+    SB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(cocos2d::MenuItemImage);
     /**
      * @js NA
      * @lua NA

@@ -3,10 +3,11 @@
 using namespace cocos2d;
 
 #define PROPERTY_FLIP "flip"
-#define PROPERTY_DISPLAYFRAME "displayFrame"
+#define PROPERTY_DISPLAYFRAME "spriteFrame"
 #define PROPERTY_COLOR "color"
 #define PROPERTY_OPACITY "opacity"
 #define PROPERTY_BLENDFUNC "blendFunc"
+
 
 namespace spritebuilder {
 

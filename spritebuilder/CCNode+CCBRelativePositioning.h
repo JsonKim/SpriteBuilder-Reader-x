@@ -1,5 +1,5 @@
-#ifndef __CCB_CCNODE_RELATIVEPOSITIONING_H__
-#define __CCB_CCNODE_RELATIVEPOSITIONING_H__
+#ifndef _SB_CCNODE_RELATIVEPOSITIONING_H__
+#define _SB_CCNODE_RELATIVEPOSITIONING_H__
 
 #include "cocos2d.h"
 #include "CCBReader.h"
@@ -12,4 +12,4 @@ extern void setRelativeScale(cocos2d::Node *node, float scaleX, float scaleY, CC
 
 }
 
-#endif // __CCB_CCNODE_RELATIVEPOSITIONING_H__
+#endif // _SB_CCNODE_RELATIVEPOSITIONING_H__

@@ -1,5 +1,5 @@
-#ifndef __CCB_KEYFRAME_H__
-#define __CCB_KEYFRAME_H__
+#ifndef __SB_KEYFRAME_H__
+#define __SB_KEYFRAME_H__
 
 #include "cocos2d.h"
 
@@ -61,4 +61,4 @@ private:
 
 }
 
-#endif // __CCB_KEYFRAME_H__
+#endif // __SB_KEYFRAME_H__

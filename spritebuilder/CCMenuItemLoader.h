@@ -1,5 +1,5 @@
-#ifndef _CCB_CCMENUITEMLOADER_H_
-#define _CCB_CCMENUITEMLOADER_H_
+#ifndef _SB_CCMENUITEMLOADER_H_
+#define _SB_CCMENUITEMLOADER_H_
 
 #include "CCLayerLoader.h"
 
@@ -21,7 +21,7 @@ protected:
      * @js NA
      * @lua NA
      */
-    CCB_PURE_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(cocos2d::MenuItem);
+    SB_PURE_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(cocos2d::MenuItem);
     /**
      * @js NA
      * @lua NA

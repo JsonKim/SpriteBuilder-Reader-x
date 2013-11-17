@@ -387,14 +387,14 @@ bool CCBReader::readHeader()
     int magicBytes = *((int*)(this->_bytes + this->_currentByte));
     this->_currentByte += 4;
 
-    if(CC_SWAP_INT32_LITTLE_TO_HOST(magicBytes) != (*reinterpret_cast<const int*>("ccbi"))) {
+    if(CC_SWAP_INT32_LITTLE_TO_HOST(magicBytes) != (*reinterpret_cast<const int*>("ibcc"))) {
         return false; 
     }
 
     /* Read version. */
     int version = this->readInt(false);
-    if(version != CCB_VERSION) {
-        log("WARNING! Incompatible ccbi file version (file: %d reader: %d)", version, CCB_VERSION);
+    if(version != SB_VERSION) {
+        log("WARNING! Incompatible ccbi file version (file: %d reader: %d)", version, SB_VERSION);
         return false;
     }
 
@@ -652,7 +652,7 @@ Node * CCBReader::readNodeGraph(Node * pParent)
         node = embeddedNode;
     }
 
-#ifdef CCB_ENABLE_JAVASCRIPT
+#ifdef SB_ENABLE_JAVASCRIPT
     /*
      if (memberVarAssignmentType && memberVarAssignmentName && ![memberVarAssignmentName isEqualToString:@""])
      {
@@ -736,10 +736,67 @@ Node * CCBReader::readNodeGraph(Node * pParent)
         }
     }
 
-#endif // CCB_ENABLE_JAVASCRIPT
+#endif // SB_ENABLE_JAVASCRIPT
     
     delete _animatedProps;
     _animatedProps = NULL;
+
+	BOOL hasPhysicsBody = this->readBool();
+	if (hasPhysicsBody)
+	{
+		// Read body shape
+		int bodyShape = this->readInt(false);
+		float cornerRadius = this->readFloat();
+        
+		// Read points
+		int numPoints = this->readInt(false);
+		Point* points = new Point[sizeof(Point)*numPoints];
+		for (int i = 0; i < numPoints; i++)
+		{
+			float x = this->readFloat();
+			float y = this->readFloat();
+            
+			points[i] = Point(x, y);
+		}
+        
+		// Create body
+		/*
+		CCPhysicsBody* body = NULL;
+        
+		if (bodyShape == 0)
+		{
+			body = [CCPhysicsBody bodyWithPolygonFromPoints:points count:numPoints cornerRadius:cornerRadius];
+		}
+		else if (bodyShape == 1)
+		{
+			body = [CCPhysicsBody bodyWithCircleOfRadius:cornerRadius andCenter:points[0]];
+		}
+		*/
+        
+		BOOL dynamic = this->readBool();
+		BOOL affectedByGravity = this->readBool();
+		BOOL allowsRotation = this->readBool();
+        
+		/*
+		if (dynamic) body.type = CCPhysicsBodyTypeDynamic;
+		else body.type = CCPhysicsBodyTypeStatic;
+		*/
+        
+		float density = this->readFloat();
+		float friction = this->readFloat();
+		float elasticity = this->readFloat();
+        
+		//body.affectedByGravity = affectedByGravity;
+		//body.allowsRotation = allowsRotation;
+        
+		//body.density = density;
+		/*
+		body.friction = friction;
+		body.elasticity = elasticity;
+        
+		node.physicsBody = body;
+		*/
+	}
 
     /* Read and add children. */
     int numChildren = this->readInt(false);

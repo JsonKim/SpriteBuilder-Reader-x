@@ -1,5 +1,5 @@
-#ifndef __CCB_VALUE_H__
-#define __CCB_VALUE_H__
+#ifndef __SB_VALUE_H__
+#define __SB_VALUE_H__
 
 #include "cocos2d.h"
 
@@ -20,6 +20,16 @@ private:
     cocos2d::Color3B color;
 };
 
+class Color4BWapper : public cocos2d::Object
+{
+public:
+    static Color4BWapper* create(const cocos2d::Color4B& color);
+    
+    const cocos2d::Color4B& getColor() const;
+    
+private:
+    cocos2d::Color4B color;
+};
 
 
 class CCBValue : public cocos2d::Object
@@ -67,4 +77,4 @@ private:
 
 }
 
-#endif // __CCB_VALUE_H__
+#endif // __SB_VALUE_H__

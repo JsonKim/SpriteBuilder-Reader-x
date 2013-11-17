@@ -1,5 +1,5 @@
-#ifndef _CCB_CCBREADER_H_
-#define _CCB_CCBREADER_H_
+#ifndef _SB_CCBREADER_H_
+#define _SB_CCBREADER_H_
 
 #include "cocos2d.h"
 #include <string>
@@ -7,7 +7,7 @@
 #include "CCBSequence.h"
 #include "extensions/GUI/CCControlExtension/CCControl.h"
 
-#define CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(T, METHOD) static T * METHOD() { \
+#define SB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(T, METHOD) static T * METHOD() { \
     T * ptr = new T(); \
     if(ptr != NULL) { \
         ptr->autorelease(); \
@@ -17,7 +17,7 @@
     return NULL; \
 }
 
-#define CCB_STATIC_NEW_AUTORELEASE_OBJECT_WITH_INIT_METHOD(T, METHOD) static T * METHOD() { \
+#define SB_STATIC_NEW_AUTORELEASE_OBJECT_WITH_INIT_METHOD(T, METHOD) static T * METHOD() { \
     T * ptr = new T(); \
     if(ptr != NULL && ptr->init()) { \
         ptr->autorelease(); \
@@ -27,7 +27,7 @@
     return NULL; \
 }
 
-#define CCB_VERSION 5
+#define SB_VERSION 6
 
 namespace spritebuilder {
 
@@ -89,11 +89,12 @@ public:
         INTEGER_LABELED,
         BLOCK,
         ANIMATION,
-        CCB_FILE,
+        SB_FILE,
         STRING,
         BLOCK_CONTROL,
         FLOAT_SCALE,
-        FLOAT_XY
+        FLOAT_XY,
+		COLOR4,
     };
     
     enum class FloatType {

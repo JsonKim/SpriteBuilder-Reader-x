@@ -1,5 +1,5 @@
-#ifndef __CCB_SEQUENCE_PROPERTY_H__
-#define __CCB_SEQUENCE_PROPERTY_H__
+#ifndef __SB_SEQUENCE_PROPERTY_H__
+#define __SB_SEQUENCE_PROPERTY_H__
 
 #include "cocos2d.h"
 #include "CCBKeyframe.h"
@@ -37,4 +37,4 @@ private:
 
 }
 
-#endif // __CCB_SEQUENCE_PROPERTY_H__
+#endif // __SB_SEQUENCE_PROPERTY_H__

@@ -1,5 +1,5 @@
-#ifndef _CCB_CCNODELOADER_H_
-#define _CCB_CCNODELOADER_H_
+#ifndef _SB_CCNODELOADER_H_
+#define _SB_CCNODELOADER_H_
 
 #include "extensions/GUI/CCControlExtension/CCInvocation.h"
 #include "cocos2d.h"
@@ -24,11 +24,11 @@ namespace spritebuilder {
 #define ASSERT_FAIL_UNEXPECTED_PROPERTY(PROPERTY) cocos2d::log("Unexpected property: '%s'!\n", PROPERTY); assert(false)
 #define ASSERT_FAIL_UNEXPECTED_PROPERTYTYPE(PROPERTYTYPE) cocos2d::log("Unexpected property type: '%d'!\n", PROPERTYTYPE); assert(false)
 
-#define CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(T) virtual T * createNode(cocos2d::Node * pParent, spritebuilder::CCBReader * ccbReader) { \
+#define SB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(T) virtual T * createNode(cocos2d::Node * pParent, spritebuilder::CCBReader * ccbReader) { \
     return T::create(); \
 }
 
-#define CCB_PURE_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(T) virtual T * createNode(cocos2d::Node * pParent, spritebuilder::CCBReader * ccbReader) = 0
+#define SB_PURE_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(T) virtual T * createNode(cocos2d::Node * pParent, spritebuilder::CCBReader * ccbReader) = 0
 
 struct BlockData {
     cocos2d::SEL_MenuHandler mSELMenuHandler;
@@ -60,7 +60,7 @@ class NodeLoader : public cocos2d::Object {
          * @js NA
          * @lua NA
          */
-        CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(NodeLoader, loader);
+        SB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(NodeLoader, loader);
         /**
          * @js NA
          * @lua NA
@@ -78,7 +78,7 @@ class NodeLoader : public cocos2d::Object {
         virtual cocos2d::Dictionary* getCustomProperties();
     
     protected:
-        CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(cocos2d::Node);
+        SB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(cocos2d::Node);
 
         virtual cocos2d::Point parsePropTypePosition(cocos2d::Node * pNode, cocos2d::Node * pParent, CCBReader * ccbReader, const char *pPropertyName);
         virtual cocos2d::Point parsePropTypePoint(cocos2d::Node * pNode, cocos2d::Node * pParent, CCBReader * ccbReader);
@@ -108,6 +108,7 @@ class NodeLoader : public cocos2d::Object {
         virtual BlockControlData * parsePropTypeBlockControl(cocos2d::Node * pNode, cocos2d::Node * pParent, CCBReader * ccbReader);
         virtual cocos2d::Node * parsePropTypeCCBFile(cocos2d::Node * pNode, cocos2d::Node * pParent, CCBReader * ccbReader);
         virtual float * parsePropTypeFloatXY(cocos2d::Node * pNode, cocos2d::Node * pParent, CCBReader * ccbReader);
+		virtual cocos2d::Color4B parsePropTypeColor4(cocos2d::Node * pNode, cocos2d::Node * pParent, CCBReader * ccbReader, const char *pPropertyName);
 
 
         virtual void onHandlePropTypePosition(cocos2d::Node * pNode,cocos2d:: Node * pParent, const char* pPropertyName, cocos2d::Point pPosition, CCBReader * ccbReader);
@@ -139,6 +140,7 @@ class NodeLoader : public cocos2d::Object {
         virtual void onHandlePropTypeBlock(cocos2d::Node * pNode, cocos2d::Node * pParent, const char* pPropertyName, BlockData * pBlockData, CCBReader * ccbReader);
         virtual void onHandlePropTypeBlockControl(cocos2d::Node * pNode, cocos2d::Node * pParent, const char* pPropertyName, BlockControlData * pBlockControlData, CCBReader * ccbReader);
         virtual void onHandlePropTypeCCBFile(cocos2d::Node * pNode, cocos2d::Node * pParent, const char* pPropertyName, cocos2d::Node * pCCBFileNode, CCBReader * ccbReader);
+		virtual void onHandlePropTypeColor4(cocos2d::Node * pNode, cocos2d::Node * pParent, const char* pPropertyName, cocos2d::Color4B pColor4B, CCBReader * ccbReader);
 
 protected:
         cocos2d::Dictionary* _customProperties;

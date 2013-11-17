@@ -1,5 +1,5 @@
-#ifndef _CCB_CCSPRITELOADER_H_
-#define _CCB_CCSPRITELOADER_H_
+#ifndef _SB_CCSPRITELOADER_H_
+#define _SB_CCSPRITELOADER_H_
 
 #include "CCNodeLoader.h"
 
@@ -19,10 +19,10 @@ public:
      * @js NA
      * @lua NA
      */
-    CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(SpriteLoader, loader);
+    SB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(SpriteLoader, loader);
 
 protected:
-    CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(cocos2d::Sprite);
+    SB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(cocos2d::Sprite);
 
     virtual void onHandlePropTypeColor3(cocos2d::Node * pNode, cocos2d::Node * pParent, const char * pPropertyName, cocos2d::Color3B pColor3B, CCBReader * ccbReader);
     virtual void onHandlePropTypeByte(cocos2d::Node * pNode, cocos2d::Node * pParent, const char * pPropertyName, unsigned char pByte, CCBReader * ccbReader);

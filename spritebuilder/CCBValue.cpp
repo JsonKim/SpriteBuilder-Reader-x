@@ -26,6 +26,29 @@ const Color3B& Color3BWapper::getColor() const
     return color;
 }
 
+// Implementation of Color4BWapper
+
+Color4BWapper* Color4BWapper::create(const Color4B& color)
+{
+    Color4BWapper *ret = new Color4BWapper();
+    if (ret)
+    {
+        ret->color.r = color.r;
+        ret->color.g = color.g;
+        ret->color.b = color.b;
+		ret->color.a = color.a;
+
+        ret->autorelease();
+    }
+
+    return ret;
+}
+
+const Color4B& Color4BWapper::getColor() const
+{
+    return color;
+}
+
 // Implementation of CCBValue
 
 CCBValue* CCBValue::create(int nValue)

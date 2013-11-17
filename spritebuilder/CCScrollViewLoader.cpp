@@ -4,6 +4,7 @@ using namespace cocos2d;
 using namespace cocos2d::extension;
 
 #define PROPERTY_CONTAINER "container"
+#define PROPERTY_CONTENTNODE "contentNode"
 #define PROPERTY_DIRECTION "direction"
 #define PROPERTY_CLIPSTOBOUNDS "clipsToBounds"
 #define PROPERTY_BOUNCES "bounces"
@@ -31,6 +32,9 @@ void ScrollViewLoader::onHandlePropTypeCheck(Node * pNode, Node * pParent, const
 
 void ScrollViewLoader::onHandlePropTypeCCBFile(Node * pNode, Node * pParent, const char * pPropertyName, Node * pCCBFileNode, CCBReader * ccbReader) {
     if(strcmp(pPropertyName, PROPERTY_CONTAINER) == 0) {
+        ((ScrollView *)pNode)->setContainer(pCCBFileNode);
+		((ScrollView *)pNode)->updateInset();
+	} else if(strcmp(pPropertyName, PROPERTY_CONTENTNODE) == 0) {
         ((ScrollView *)pNode)->setContainer(pCCBFileNode);
 		((ScrollView *)pNode)->updateInset();
     } else {
