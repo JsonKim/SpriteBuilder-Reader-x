@@ -1,6 +1,5 @@
 #include "CCNodeLoaderLibrary.h"
 
-#include "CCLayerLoader.h"
 #include "CCLayerColorLoader.h"
 #include "CCLayerGradientLoader.h"
 #include "CCLabelBMFontLoader.h"
@@ -8,9 +7,6 @@
 #include "CCSpriteLoader.h"
 #include "CCScale9SpriteLoader.h"
 #include "CCBFileLoader.h"
-#include "CCMenuLoader.h"
-#include "CCMenuItemLoader.h"
-#include "CCMenuItemImageLoader.h"
 #include "CCControlButtonLoader.h"
 #include "CCParticleSystemQuadLoader.h"
 #include "CCScrollViewLoader.h"
@@ -29,17 +25,14 @@ NodeLoaderLibrary::~NodeLoaderLibrary() {
 
 void NodeLoaderLibrary::registerDefaultNodeLoaders() {
     this->registerNodeLoader("CCNode", NodeLoader::loader());
-    this->registerNodeLoader("CCLayer", LayerLoader::loader());
     this->registerNodeLoader("CCLayerColor", LayerColorLoader::loader());
     this->registerNodeLoader("CCLayerGradient", LayerGradientLoader::loader());
     this->registerNodeLoader("CCSprite", SpriteLoader::loader());
     this->registerNodeLoader("CCLabelBMFont", LabelBMFontLoader::loader());
     this->registerNodeLoader("CCLabelTTF", LabelTTFLoader::loader());
-    this->registerNodeLoader("CCScale9Sprite", Scale9SpriteLoader::loader());
+    this->registerNodeLoader("CCSprite9Slice", Scale9SpriteLoader::loader());
     this->registerNodeLoader("CCScrollView", ScrollViewLoader::loader());
     this->registerNodeLoader("CCBFile", CCBFileLoader::loader());
-    this->registerNodeLoader("CCMenu", MenuLoader::loader());
-    this->registerNodeLoader("CCMenuItemImage", MenuItemImageLoader::loader());
     this->registerNodeLoader("CCButton", ControlButtonLoader::loader());
     this->registerNodeLoader("CCParticleSystemQuad", ParticleSystemQuadLoader::loader());
 }

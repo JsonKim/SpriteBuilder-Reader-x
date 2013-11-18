@@ -22,8 +22,11 @@ using namespace cocos2d;
 
 namespace spritebuilder {
     
-LabelTTFLoader::LabelTTFLoader() : NodeLoader(), _shadowOffset(Size(0,0)), _shadowBlurRadius(0) {
-    
+LabelTTFLoader::LabelTTFLoader() :
+    NodeLoader(),
+    _shadowOffset(Size(0,0)), _shadowBlurRadius(0),
+    _outlineColor(Color3B::BLACK), _outlineWidth(0)
+{
 }
 
 void LabelTTFLoader::onHandlePropTypePosition(Node * pNode, Node * pParent, const char * pPropertyName, Point pPosition, CCBReader * ccbReader) {
@@ -49,9 +52,11 @@ void LabelTTFLoader::onHandlePropTypeColor4(Node * pNode, Node * pParent, const 
         // TODO: with opacity
 		((LabelTTF *)pNode)->setOpacity(pColor4B.a);
 	} else if(strcmp(pPropertyName, PROPERTY_OUTLINECOLOR) == 0) {
-		// TODO: 
+        this->_outlineColor = Color3B(pColor4B);
+		((LabelTTF *)pNode)->enableStroke(this->_outlineColor, this->_outlineWidth);
 	} else if(strcmp(pPropertyName, PROPERTY_SHADOWCOLOR) == 0) {
-		// TODO: 
+		// TODO:
+        log("cocos2d-x not support shadow color");
     } else {
         NodeLoader::onHandlePropTypeColor4(pNode, pParent, pPropertyName, pColor4B, ccbReader);
     }
@@ -94,7 +99,8 @@ void LabelTTFLoader::onHandlePropTypeFloatScale(Node * pNode, Node * pParent, co
     if(strcmp(pPropertyName, PROPERTY_FONTSIZE) == 0) {
         ((LabelTTF *)pNode)->setFontSize(pFloatScale);
 	} else if(strcmp(pPropertyName, PROPERTY_OUTLINEWIDTH) == 0) {
-		// TODO: 
+        this->_outlineWidth = pFloatScale;
+		((LabelTTF *)pNode)->enableStroke(this->_outlineColor, this->_outlineWidth);
 	} else if(strcmp(pPropertyName, PROPERTY_SHADOWBLURRADIUS) == 0) {
         this->_shadowBlurRadius = pFloatScale;
 		((LabelTTF *)pNode)->enableShadow(this->_shadowOffset, 1, this->_shadowBlurRadius);

@@ -422,19 +422,85 @@ Point NodeLoader::parsePropTypePointLock(Node * pNode, Node * pParent, CCBReader
 Size NodeLoader::parsePropTypeSize(Node * pNode, Node * pParent, CCBReader * ccbReader) {
     float width = ccbReader->readFloat();
     float height = ccbReader->readFloat();
-	int xUnit = ccbReader->readByte();
-	int yUnit = ccbReader->readByte();
-
-	CCBReader::SizeType type = CCBReader::SizeType::PERCENT; // static_cast<CCBReader::SizeType>(0);
-	// CCBReader::SizeType type = static_cast<CCBReader::SizeType>(ccbReader->readInt(false));
+    CCBReader::SizeUnit xUnit = static_cast<CCBReader::SizeUnit>(ccbReader->readByte());
+    CCBReader::SizeUnit yUnit = static_cast<CCBReader::SizeUnit>(ccbReader->readByte());
 
     Size containerSize = ccbReader->getAnimationManager()->getContainerSize(pParent);
 
+    switch (xUnit)
+    {
+        case CCBReader::SizeUnit::POINTS:
+        {
+            /* Nothing. */
+            break;
+        }
+        case CCBReader::SizeUnit::SCALED:
+        {
+            width = containerSize.width / CCBReader::getResolutionScale();
+            break;
+        }
+        case CCBReader::SizeUnit::NORMALIZED:
+        {
+            width = containerSize.width * width;
+            break;
+        }
+        case CCBReader::SizeUnit::INSETPOINTS:
+        {
+            width = containerSize.width - width;
+            break;
+        }
+        case CCBReader::SizeUnit::INSETSCALED:
+        {
+            width = (containerSize.width - width) / CCBReader::getResolutionScale();
+            /* Nothing. */
+            break;
+        }
+        default:
+        {
+            log("Unknown CCB type.");
+        }
+            break;
+    }
+    
+    switch (yUnit)
+    {
+        case CCBReader::SizeUnit::POINTS:
+        {
+            /* Nothing. */
+            break;
+        }
+        case CCBReader::SizeUnit::SCALED:
+        {
+            height = containerSize.height / CCBReader::getResolutionScale();
+            break;
+        }
+        case CCBReader::SizeUnit::NORMALIZED:
+        {
+            height = containerSize.height * height;
+            break;
+        }
+        case CCBReader::SizeUnit::INSETPOINTS:
+        {
+            height = containerSize.height - height;
+            break;
+        }
+        case CCBReader::SizeUnit::INSETSCALED:
+        {
+            height = (containerSize.height - height) / CCBReader::getResolutionScale();
+            break;
+        }
+        default:
+        {
+            log("Unknown CCB type.");
+        }
+            break;
+    }
+    
+    /*
     switch (type) 
     {
         case CCBReader::SizeType::ABSOLUTE:
         {
-            /* Nothing. */
             break;
         }
         case CCBReader::SizeType::RELATIVE_CONTAINER:
@@ -473,6 +539,7 @@ Size NodeLoader::parsePropTypeSize(Node * pNode, Node * pParent, CCBReader * ccb
         }
             break;
     }
+*/
     
     return Size(width, height);
 }

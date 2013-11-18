@@ -14,7 +14,7 @@ Point getAbsolutePosition(Point pt, CCBReader::PositionType type, CCBReader::Pos
 	}
 	else if (xUnit == CCBReader::PositionUnit::SCALED) {
 		float resolutionScale = CCBReader::getResolutionScale();
-		pt.x = containerSize.width * resolutionScale;
+		pt.x = pt.x * resolutionScale;
 	}
 
 	if (yUnit == CCBReader::PositionUnit::NORMALIZED) {
@@ -22,7 +22,7 @@ Point getAbsolutePosition(Point pt, CCBReader::PositionType type, CCBReader::Pos
 	}
 	else if (yUnit == CCBReader::PositionUnit::SCALED) {
 		float resolutionScale = CCBReader::getResolutionScale();
-		pt.y = containerSize.height * resolutionScale;
+		pt.y = pt.y * resolutionScale;
 	}
 
     if (type == CCBReader::PositionType::RELATIVE_BOTTOM_LEFT)

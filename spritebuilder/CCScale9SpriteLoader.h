@@ -16,6 +16,11 @@ public:
      * @js NA
      * @lua NA
      */
+    Scale9SpriteLoader();
+    /**
+     * @js NA
+     * @lua NA
+     */
     virtual ~Scale9SpriteLoader() {};
     /**
      * @js NA
@@ -65,6 +70,17 @@ protected:
      * @lua NA
      */
     virtual void onHandlePropTypeFloat(cocos2d::Node * pNode, cocos2d::Node * pParent, const char * pPropertyName, float pFloat, CCBReader * ccbReader);
+    
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual void onHandlePropTypeFlip(cocos2d::Node * pNode, cocos2d::Node * pParent, const char * pPropertyName, bool * pFlip, CCBReader * ccbReader);
+    
+private:
+    cocos2d::Size _contentSize;
+    float _marginLeft, _marginTop, _marginRight, _marginBottom;
+    void update(cocos2d::extension::Scale9Sprite * pNode);
 };
 
 }

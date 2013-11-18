@@ -143,6 +143,15 @@ public:
         MULTIPLY_RESOLUTION,
     };
     
+    enum class SizeUnit
+    {
+        POINTS,
+        SCALED,
+        NORMALIZED,
+        INSETPOINTS,
+        INSETSCALED
+    };
+    
     enum class ScaleType
     {
         ABSOLUTE,
