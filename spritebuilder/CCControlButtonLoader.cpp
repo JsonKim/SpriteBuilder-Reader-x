@@ -3,60 +3,135 @@
 using namespace cocos2d;
 using namespace cocos2d::extension;
 
-namespace spritebuilder {;
+namespace spritebuilder {
 
-#define PROPERTY_ZOOMONTOUCHDOWN "zoomOnTouchDown"
 #define PROPERTY_TITLE_NORMAL "title|1"
 #define PROPERTY_TITLE_HIGHLIGHTED "title|2"
 #define PROPERTY_TITLE_DISABLED "title|3"
-#define PROPERTY_FONTCOLOR "fontColor"
-#define PROPERTY_LABELCOLOR_NORMAL "labelColor|Normal"
-#define PROPERTY_LABELCOLOR_HIGHLIGHTED "labelColor|Highlighted"
-#define PROPERTY_LABELCOLOR_DISABLED "labelColor|Disabled"
-#define PROPERTY_FONTNAME "fontName"
 #define PROPERTY_TITLETTF_NORMAL "titleTTF|1"
 #define PROPERTY_TITLETTF_HIGHLIGHTED "titleTTF|2"
 #define PROPERTY_TITLETTF_DISABLED "titleTTF|3"
-#define PROPERTY_FONTSIZE "fontSize"
 #define PROPERTY_TITLETTFSIZE_NORMAL "titleTTFSize|1"
 #define PROPERTY_TITLETTFSIZE_HIGHLIGHTED "titleTTFSize|2"
 #define PROPERTY_TITLETTFSIZE_DISABLED "titleTTFSize|3"
-#define PROPERTY_LABELOPACITY_SELECTED "labelOpacity|Selected"
-#define PROPERTY_LABELOPACITY_DISABLED "labelOpacity|Disabled"
 #define PROPERTY_LABELANCHORPOINT "labelAnchorPoint"
-#define PROPERTY_PREFEREDSIZE "preferredSize" // TODO Should be "preferredSize". This is a typo in cocos2d-iphone, cocos2d-x and CocosBuilder!
+#define PROPERTY_PREFEREDSIZE "preferredSize"
+#define PROPERTY_MAXSIZE "maxSize"
+
+
+#define PROPERTY_TITLE "title"
+#define PROPERTY_ZOOMWHENHIGHLIGHTED "zoomWhenHighlighted"
+#define PROPERTY_TOGGLESELECTEDSTATE "toggleSelectedState"
 #define PROPERTY_BACKGROUNDSPRITEFRAME_NORMAL "backgroundSpriteFrame|Normal"
+#define PROPERTY_BACKGROUNDOPACITY_NORMAL "backgroundOpacity|Normal"
+#define PROPERTY_BACKGROUNDCOLOR_NORMAL "backgroundColor|Normal"
+#define PROPERTY_LABELOPACITY_NORMAL "labelOpacity|Normal"
+#define PROPERTY_LABELCOLOR_NORMAL "labelColor|Normal"
 #define PROPERTY_BACKGROUNDSPRITEFRAME_HIGHLIGHTED "backgroundSpriteFrame|Highlighted"
-#define PROPERTY_BACKGROUNDSPRITEFRAME_SELECTED "backgroundSpriteFrame|Selected"
+#define PROPERTY_BACKGROUNDOPACITY_HIGHLIGHTED "backgroundOpacity|Highlighted"
+#define PROPERTY_BACKGROUNDCOLOR_HIGHLIGHTED "backgroundColor|Highlighted"
+#define PROPERTY_LABELOPACITY_HIGHLIGHTED "labelOpacity|Highlighted"
+#define PROPERTY_LABELCOLOR_HIGHLIGHTED "labelColor|Highlighted"
 #define PROPERTY_BACKGROUNDSPRITEFRAME_DISABLED "backgroundSpriteFrame|Disabled"
-#define PROPERTY_BACKGROUNDOPACITY_SELECTED "backgroundOpacity|Selected"
 #define PROPERTY_BACKGROUNDOPACITY_DISABLED "backgroundOpacity|Disabled"
+#define PROPERTY_BACKGROUNDCOLOR_DISABLED "backgroundColor|Disabled"
+#define PROPERTY_LABELOPACITY_DISABLED "labelOpacity|Disabled"
+#define PROPERTY_LABELCOLOR_DISABLED "labelColor|Disabled"
+#define PROPERTY_BACKGROUNDSPRITEFRAME_SELECTED "backgroundSpriteFrame|Selected"
+#define PROPERTY_BACKGROUNDOPACITY_SELECTED "backgroundOpacity|Selected"
+#define PROPERTY_BACKGROUNDCOLOR_SELECTED "backgroundColor|Selected"
+#define PROPERTY_LABELOPACITY_SELECTED "labelOpacity|Selected"
+#define PROPERTY_LABELCOLOR_SELECTED "labelColor|Selected"
+#define PROPERTY_FONTNAME "fontName"
+#define PROPERTY_FONTSIZE "fontSize"
 #define PROPERTY_HORIZONTAL_PADDING "horizontalPadding"
 #define PROPERTY_VERTICAL_PADDING "verticalPadding"
-#define PROPERTY_OUTLINEWIDTH "outlineWidth"
+#define PROPERTY_FONTCOLOR "fontColor"
 #define PROPERTY_OUTLINECOLOR "outlineColor"
+#define PROPERTY_OUTLINEWIDTH "outlineWidth"
 #define PROPERTY_SHADOWCOLOR "shadowColor"
 #define PROPERTY_SHADOWBLURRADIUS "shadowBlurRadius"
 #define PROPERTY_SHADOWOFFSET "shadowOffset"
-#define PROPERTY_MAXSIZE "maxSize"
+
+CCBControlButton* CCBControlButton::create() {
+    CCBControlButton *pControlButton = new CCBControlButton();
+    if (pControlButton && pControlButton->init())
+    {
+        pControlButton->autorelease();
+        return pControlButton;
+    }
+    CC_SAFE_DELETE(pControlButton);
+    return NULL;
+}
+    
+void CCBControlButton::setShadowOffset(const Size & size) {
+    this->_shadowOffset = size;
+    this->enableShadow();
+}
+    
+void CCBControlButton::setShadowColor(const Color4B & color) {
+    this->_shadowColor = color;
+    this->enableShadow();
+}
+    
+void CCBControlButton::setShadowBlurRadius(float blurRadius) {
+    this->_shadowBlurRadius = blurRadius;
+    this->enableShadow();
+}
+    
+void CCBControlButton::enableShadow() {
+    ((LabelTTF *)this->getTitleLabelForState(Control::State::NORMAL))->enableShadow(this->_shadowOffset, this->_shadowColor.a/255.f, this->_shadowBlurRadius);
+    ((LabelTTF *)this->getTitleLabelForState(Control::State::HIGH_LIGHTED))->enableShadow(this->_shadowOffset, this->_shadowColor.a/255.f, this->_shadowBlurRadius);
+    ((LabelTTF *)this->getTitleLabelForState(Control::State::DISABLED))->enableShadow(this->_shadowOffset, this->_shadowColor.a/225.f, this->_shadowBlurRadius);
+    ((LabelTTF *)this->getTitleLabelForState(Control::State::SELECTED))->enableShadow(this->_shadowOffset, this->_shadowColor.a/225.f, this->_shadowBlurRadius);
+    this->needsLayout();
+}
+    
+void CCBControlButton::needsLayout() {
+    ControlButton::needsLayout();
+    if (this->getBackgroundSprite() != NULL)
+    {
+        cocos2d::Size size = this->getBackgroundSprite()->getContentSize();
+        size.width += abs(this->_shadowOffset.width)+this->_shadowBlurRadius*2.f;
+        size.height += abs(this->_shadowOffset.height)+this->_shadowBlurRadius*2.f;
+        this->getBackgroundSprite()->setContentSize(size);
+    }
+        
+    if (this->getTitleLabel()) {
+        cocos2d::Point position = this->getTitleLabel()->getPosition();
+        position.x += this->_shadowOffset.width/2.f;
+        position.y += this->_shadowOffset.height/2.f;
+            
+        this->getTitleLabel()->setPosition(position);
+    }
+}
 
 void ControlButtonLoader::onHandlePropTypeCheck(Node * pNode, Node * pParent, const char * pPropertyName, bool pCheck, CCBReader * ccbReader) {
-    if(strcmp(pPropertyName, PROPERTY_ZOOMONTOUCHDOWN) == 0) {
+    if(strcmp(pPropertyName, PROPERTY_ZOOMWHENHIGHLIGHTED) == 0) {
         ((ControlButton *)pNode)->setZoomOnTouchDown(pCheck);
+    } else if (strcmp(pPropertyName, PROPERTY_TOGGLESELECTEDSTATE) == 0) {
+        // ((ControlButton *)pNode)->
     } else {
         ControlLoader::onHandlePropTypeCheck(pNode, pParent, pPropertyName, pCheck, ccbReader);
     }
 }
 
 void ControlButtonLoader::onHandlePropTypeByte(Node * pNode, Node * pParent, const char * pPropertyName, unsigned char pByte, CCBReader * ccbReader) {
-	if(strcmp(pPropertyName, PROPERTY_BACKGROUNDOPACITY_SELECTED) == 0) {
-		// TODO:
+    if(strcmp(pPropertyName, PROPERTY_BACKGROUNDOPACITY_NORMAL) == 0) {
+        ((ControlButton *)pNode)->getBackgroundSpriteForState(Control::State::NORMAL)->setOpacity(pByte);
+	} else if(strcmp(pPropertyName, PROPERTY_BACKGROUNDOPACITY_HIGHLIGHTED) == 0) {
+        ((ControlButton *)pNode)->getBackgroundSpriteForState(Control::State::HIGH_LIGHTED)->setOpacity(pByte);
 	} else if(strcmp(pPropertyName, PROPERTY_BACKGROUNDOPACITY_DISABLED) == 0) {
-		// TODO:
-        // ((ControlButton *)pNode)->
-	} else if(strcmp(pPropertyName, PROPERTY_LABELOPACITY_SELECTED) == 0) {
+        ((ControlButton *)pNode)->getBackgroundSpriteForState(Control::State::DISABLED)->setOpacity(pByte);
+	} else if(strcmp(pPropertyName, PROPERTY_BACKGROUNDOPACITY_SELECTED) == 0) {
+        ((ControlButton *)pNode)->getBackgroundSpriteForState(Control::State::SELECTED)->setOpacity(pByte);
+	} else if(strcmp(pPropertyName, PROPERTY_LABELOPACITY_NORMAL) == 0) {
+        // ((ControlButton *)pNode)->setTitleLabelForState(<#cocos2d::Node *label#>, <#cocos2d::extension::Control::State state#>)
+	} else if(strcmp(pPropertyName, PROPERTY_LABELOPACITY_HIGHLIGHTED) == 0) {
 		// TODO:
 	} else if(strcmp(pPropertyName, PROPERTY_LABELOPACITY_DISABLED) == 0) {
+		// TODO:
+	} else if(strcmp(pPropertyName, PROPERTY_LABELOPACITY_SELECTED) == 0) {
 		// TODO:
     } else {
         ControlLoader::onHandlePropTypeByte(pNode, pParent, pPropertyName, pByte, ccbReader);
@@ -64,48 +139,45 @@ void ControlButtonLoader::onHandlePropTypeByte(Node * pNode, Node * pParent, con
 }
 
 void ControlButtonLoader::onHandlePropTypeString(Node * pNode, Node * pParent, const char * pPropertyName, const char * pString, CCBReader * ccbReader) {
-    if(strcmp(pPropertyName, PROPERTY_TITLE_NORMAL) == 0) {
+    if(strcmp(pPropertyName, PROPERTY_TITLE) == 0) {
         ((ControlButton *)pNode)->setTitleForState(String::create(pString), Control::State::NORMAL);
-    } else if(strcmp(pPropertyName, PROPERTY_TITLE_HIGHLIGHTED) == 0) {
         ((ControlButton *)pNode)->setTitleForState(String::create(pString), Control::State::HIGH_LIGHTED);
-    } else if(strcmp(pPropertyName, PROPERTY_TITLE_DISABLED) == 0) {
         ((ControlButton *)pNode)->setTitleForState(String::create(pString), Control::State::DISABLED);
+        ((ControlButton *)pNode)->setTitleForState(String::create(pString), Control::State::SELECTED);
     } else {
         ControlLoader::onHandlePropTypeString(pNode, pParent, pPropertyName, pString, ccbReader);
     }
 }
 
 void ControlButtonLoader::onHandlePropTypeFontTTF(Node * pNode, Node * pParent, const char * pPropertyName, const char * pFontTTF, CCBReader * ccbReader) {
-    if(strcmp(pPropertyName, PROPERTY_TITLETTF_NORMAL) == 0) {
+	if(strcmp(pPropertyName, PROPERTY_FONTNAME) == 0) {
         ((ControlButton *)pNode)->setTitleTTFForState(pFontTTF, Control::State::NORMAL);
-    } else if(strcmp(pPropertyName, PROPERTY_TITLETTF_HIGHLIGHTED) == 0) {
         ((ControlButton *)pNode)->setTitleTTFForState(pFontTTF, Control::State::HIGH_LIGHTED);
-    } else if(strcmp(pPropertyName, PROPERTY_TITLETTF_DISABLED) == 0) {
         ((ControlButton *)pNode)->setTitleTTFForState(pFontTTF, Control::State::DISABLED);
-	} else if(strcmp(pPropertyName, PROPERTY_FONTNAME) == 0) {
-		// TODO:
+        ((ControlButton *)pNode)->setTitleTTFForState(pFontTTF, Control::State::SELECTED);
+        ((CCBControlButton *)pNode)->enableShadow();
     } else {
         ControlLoader::onHandlePropTypeFontTTF(pNode, pParent, pPropertyName, pFontTTF, ccbReader);
     }
 }
 
 void ControlButtonLoader::onHandlePropTypeFloatScale(Node * pNode, Node * pParent, const char * pPropertyName, float pFloatScale, CCBReader * ccbReader) {
-    if(strcmp(pPropertyName, PROPERTY_TITLETTFSIZE_NORMAL) == 0) {
+	if(strcmp(pPropertyName, PROPERTY_FONTSIZE) == 0) {
         ((ControlButton *)pNode)->setTitleTTFSizeForState(pFloatScale, Control::State::NORMAL);
-    } else if(strcmp(pPropertyName, PROPERTY_TITLETTFSIZE_HIGHLIGHTED) == 0) {
         ((ControlButton *)pNode)->setTitleTTFSizeForState(pFloatScale, Control::State::HIGH_LIGHTED);
-    } else if(strcmp(pPropertyName, PROPERTY_TITLETTFSIZE_DISABLED) == 0) {
         ((ControlButton *)pNode)->setTitleTTFSizeForState(pFloatScale, Control::State::DISABLED);
-	} else if(strcmp(pPropertyName, PROPERTY_FONTSIZE) == 0) {
-		// TOOD:
+        ((ControlButton *)pNode)->setTitleTTFSizeForState(pFloatScale, Control::State::SELECTED);
+        ((ControlButton *)pNode)->needsLayout();
 	} else if(strcmp(pPropertyName, PROPERTY_HORIZONTAL_PADDING) == 0) {
-		// TODO:
+        ControlButton * pControlButton = static_cast<ControlButton*>(pNode);
+        pControlButton->setMargins(pFloatScale, pControlButton->getVerticalMargin());
 	} else if(strcmp(pPropertyName, PROPERTY_VERTICAL_PADDING) == 0) {
-		// TODO:
+        ControlButton * pControlButton = static_cast<ControlButton*>(pNode);
+        pControlButton->setMargins(pControlButton->getHorizontalOrigin(), pFloatScale);
 	} else if(strcmp(pPropertyName, PROPERTY_OUTLINEWIDTH) == 0) {
 		// TODO:
 	} else if(strcmp(pPropertyName, PROPERTY_SHADOWBLURRADIUS) == 0) {
-		// TODO:
+		((CCBControlButton *)pNode)->setShadowBlurRadius(pFloatScale);
     } else {
         ControlLoader::onHandlePropTypeFloatScale(pNode, pParent, pPropertyName, pFloatScale, ccbReader);
     }
@@ -113,7 +185,7 @@ void ControlButtonLoader::onHandlePropTypeFloatScale(Node * pNode, Node * pParen
 
 void ControlButtonLoader::onHandlePropTypePosition(Node * pNode, Node * pParent, const char * pPropertyName, Point pPosition, CCBReader * ccbReader) {
 	if(strcmp(pPropertyName, PROPERTY_SHADOWOFFSET) == 0) {
-		// TODO:
+        ((CCBControlButton *)pNode)->setShadowOffset(Size(pPosition));
     } else {
         ControlLoader::onHandlePropTypePosition(pNode, pParent, pPropertyName, pPosition, ccbReader);
     }
@@ -129,7 +201,7 @@ void ControlButtonLoader::onHandlePropTypePoint(Node * pNode, Node * pParent, co
 
 void ControlButtonLoader::onHandlePropTypeSize(Node * pNode, Node * pParent, const char * pPropertyName, Size pSize, CCBReader * ccbReader) {
     if(strcmp(pPropertyName, PROPERTY_PREFEREDSIZE) == 0) {
-        ((ControlButton *)pNode)->setPreferredSize(pSize);
+        // ((ControlButton *)pNode)->setPreferredSize(pSize);
 	} else if(strcmp(pPropertyName, PROPERTY_MAXSIZE) == 0) {
 		// TODO:
     } else {
@@ -146,11 +218,13 @@ void ControlButtonLoader::onHandlePropTypeSpriteFrame(Node * pNode, Node * pPare
         if(pSpriteFrame != NULL) {
             ((ControlButton *)pNode)->setBackgroundSpriteFrameForState(pSpriteFrame, Control::State::HIGH_LIGHTED);
         }
-    } else if(strcmp(pPropertyName, PROPERTY_BACKGROUNDSPRITEFRAME_SELECTED) == 0) {
-		// TODO:
     } else if(strcmp(pPropertyName, PROPERTY_BACKGROUNDSPRITEFRAME_DISABLED) == 0) {
         if(pSpriteFrame != NULL) {
             ((ControlButton *)pNode)->setBackgroundSpriteFrameForState(pSpriteFrame, Control::State::DISABLED);
+        }
+    } else if(strcmp(pPropertyName, PROPERTY_BACKGROUNDSPRITEFRAME_SELECTED) == 0) {
+		if(pSpriteFrame != NULL) {
+            ((ControlButton *)pNode)->setBackgroundSpriteFrameForState(pSpriteFrame, Control::State::SELECTED);
         }
     } else {
         ControlLoader::onHandlePropTypeSpriteFrame(pNode, pParent, pPropertyName, pSpriteFrame, ccbReader);
@@ -158,12 +232,22 @@ void ControlButtonLoader::onHandlePropTypeSpriteFrame(Node * pNode, Node * pPare
 }
 
 void ControlButtonLoader::onHandlePropTypeColor3(Node * pNode, Node * pParent, const char * pPropertyName, Color3B pColor3B, CCBReader * ccbReader) {
-    if(strcmp(pPropertyName, PROPERTY_LABELCOLOR_NORMAL) == 0) {
+    if(strcmp(pPropertyName, PROPERTY_BACKGROUNDCOLOR_NORMAL) == 0) {
+        ((ControlButton *)pNode)->getBackgroundSpriteForState(Control::State::NORMAL)->setColor(pColor3B);
+    } else if(strcmp(pPropertyName, PROPERTY_BACKGROUNDCOLOR_HIGHLIGHTED) == 0) {
+        ((ControlButton *)pNode)->getBackgroundSpriteForState(Control::State::HIGH_LIGHTED)->setColor(pColor3B);
+    } else if(strcmp(pPropertyName, PROPERTY_BACKGROUNDCOLOR_DISABLED) == 0) {
+        ((ControlButton *)pNode)->getBackgroundSpriteForState(Control::State::DISABLED)->setColor(pColor3B);
+    } else if(strcmp(pPropertyName, PROPERTY_BACKGROUNDCOLOR_SELECTED) == 0) {
+        ((ControlButton *)pNode)->getBackgroundSpriteForState(Control::State::SELECTED)->setColor(pColor3B);
+    } else if(strcmp(pPropertyName, PROPERTY_LABELCOLOR_NORMAL) == 0) {
         ((ControlButton *)pNode)->setTitleColorForState(pColor3B, Control::State::NORMAL);
     } else if(strcmp(pPropertyName, PROPERTY_LABELCOLOR_HIGHLIGHTED) == 0) {
         ((ControlButton *)pNode)->setTitleColorForState(pColor3B, Control::State::HIGH_LIGHTED);
     } else if(strcmp(pPropertyName, PROPERTY_LABELCOLOR_DISABLED) == 0) {
         ((ControlButton *)pNode)->setTitleColorForState(pColor3B, Control::State::DISABLED);
+    } else if(strcmp(pPropertyName, PROPERTY_LABELCOLOR_SELECTED) == 0) {
+        ((ControlButton *)pNode)->setTitleColorForState(pColor3B, Control::State::SELECTED);
     } else {
         ControlLoader::onHandlePropTypeColor3(pNode, pParent, pPropertyName, pColor3B, ccbReader);
     }
@@ -171,12 +255,13 @@ void ControlButtonLoader::onHandlePropTypeColor3(Node * pNode, Node * pParent, c
 
 void ControlButtonLoader::onHandlePropTypeColor4(Node * pNode, Node * pParent, const char * pPropertyName, Color4B pColor4B, CCBReader * ccbReader) {
     if(strcmp(pPropertyName, PROPERTY_FONTCOLOR) == 0) {
-		// ((ControlButton *)pNode)->setTitleColorForState(pColor4B, Control::State::NORMAL);
-		// TODO:
+        // RGBAProtocol * pRGBA = dynamic_cast<RGBAProtocol*>( ((ControlButton *)pNode)->getTitleLabelForState(Control::State::NORMAL) );
+        // pRGBA->setColor(Color3B(pColor4B));
+        // pRGBA->setOpacity(pColor4B.a);
 	} else if(strcmp(pPropertyName, PROPERTY_OUTLINECOLOR) == 0) {
 		// TODO:
 	} else if(strcmp(pPropertyName, PROPERTY_SHADOWCOLOR) == 0) {
-		// TODO:
+        ((CCBControlButton *)pNode)->setShadowColor(pColor4B);
 	} else {
         ControlLoader::onHandlePropTypeColor4(pNode, pParent, pPropertyName, pColor4B, ccbReader);
     }

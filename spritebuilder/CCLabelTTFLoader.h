@@ -35,6 +35,7 @@ protected:
 private:
     cocos2d::Size _shadowOffset;
     float _shadowBlurRadius;
+    cocos2d::Color4B _shadowColor;
     
     cocos2d::Color3B _outlineColor;
     float _outlineWidth;

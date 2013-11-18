@@ -24,7 +24,7 @@ namespace spritebuilder {
     
 LabelTTFLoader::LabelTTFLoader() :
     NodeLoader(),
-    _shadowOffset(Size(0,0)), _shadowBlurRadius(0),
+    _shadowOffset(Size(0,0)), _shadowBlurRadius(0), _shadowColor(Color4B::BLACK),
     _outlineColor(Color3B::BLACK), _outlineWidth(0)
 {
 }
@@ -32,7 +32,7 @@ LabelTTFLoader::LabelTTFLoader() :
 void LabelTTFLoader::onHandlePropTypePosition(Node * pNode, Node * pParent, const char * pPropertyName, Point pPosition, CCBReader * ccbReader) {
 	if(strcmp(pPropertyName, PROPERTY_SHADOWOFFSET) == 0) {
         this->_shadowOffset = Size(pPosition);
-		((LabelTTF *)pNode)->enableShadow(this->_shadowOffset, 1, this->_shadowBlurRadius);
+		((LabelTTF *)pNode)->enableShadow(this->_shadowOffset, this->_shadowColor.a/255.0f, this->_shadowBlurRadius, Color3B(this->_shadowColor));
     } else {
         NodeLoader::onHandlePropTypePosition(pNode, pParent, pPropertyName, pPosition, ccbReader);
     }
@@ -55,8 +55,8 @@ void LabelTTFLoader::onHandlePropTypeColor4(Node * pNode, Node * pParent, const 
         this->_outlineColor = Color3B(pColor4B);
 		((LabelTTF *)pNode)->enableStroke(this->_outlineColor, this->_outlineWidth);
 	} else if(strcmp(pPropertyName, PROPERTY_SHADOWCOLOR) == 0) {
-		// TODO:
-        log("cocos2d-x not support shadow color");
+        this->_shadowColor = pColor4B;
+        ((LabelTTF *)pNode)->enableShadow(this->_shadowOffset, this->_shadowColor.a/255.0f, this->_shadowBlurRadius, Color3B(this->_shadowColor));
     } else {
         NodeLoader::onHandlePropTypeColor4(pNode, pParent, pPropertyName, pColor4B, ccbReader);
     }
@@ -103,7 +103,7 @@ void LabelTTFLoader::onHandlePropTypeFloatScale(Node * pNode, Node * pParent, co
 		((LabelTTF *)pNode)->enableStroke(this->_outlineColor, this->_outlineWidth);
 	} else if(strcmp(pPropertyName, PROPERTY_SHADOWBLURRADIUS) == 0) {
         this->_shadowBlurRadius = pFloatScale;
-		((LabelTTF *)pNode)->enableShadow(this->_shadowOffset, 1, this->_shadowBlurRadius);
+        ((LabelTTF *)pNode)->enableShadow(this->_shadowOffset, this->_shadowColor.a/255.0f, this->_shadowBlurRadius, Color3B(this->_shadowColor));
     } else {
         NodeLoader::onHandlePropTypeFloatScale(pNode, pParent, pPropertyName, pFloatScale, ccbReader);
     }

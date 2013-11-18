@@ -5,6 +5,24 @@
 #include "extensions//GUI/CCControlExtension/CCControlButton.h"
 
 namespace spritebuilder {
+    
+class CCBControlButton : public cocos2d::extension::ControlButton {
+public:
+    static CCBControlButton* create();
+    
+    virtual ~CCBControlButton() {}
+    
+    void setShadowOffset(const cocos2d::Size & size);
+    void setShadowColor(const cocos2d::Color4B & color);
+    void setShadowBlurRadius(float blurRadius);
+    void enableShadow();
+    void needsLayout();
+    
+private:
+    cocos2d::Size _shadowOffset;
+    cocos2d::Color4B _shadowColor;
+    float _shadowBlurRadius;
+};
 
 /* Forward declaration. */
 class CCBReader;
@@ -23,7 +41,16 @@ class ControlButtonLoader : public ControlLoader {
         SB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(ControlButtonLoader, loader);
 
     protected:
-        SB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(cocos2d::extension::ControlButton);
+        /**
+         * @js NA
+         * @lua NA
+         */
+        virtual cocos2d::extension::ControlButton * createNode(cocos2d::Node * pParent, spritebuilder::CCBReader * ccbReader) {
+            cocos2d::extension::ControlButton* pNode = CCBControlButton::create();
+            pNode->setZoomOnTouchDown(false);
+
+            return pNode;
+        };
 
         virtual void onHandlePropTypeCheck(cocos2d::Node * pNode, cocos2d::Node * pParent, const char * pPropertyName, bool pCheck, CCBReader * ccbReader);
 		virtual void onHandlePropTypeByte(cocos2d::Node * pNode, cocos2d::Node * pParent, const char * pPropertyName, unsigned char pByte, CCBReader * ccbReader);
