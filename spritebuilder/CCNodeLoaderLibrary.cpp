@@ -10,6 +10,8 @@
 #include "CCControlButtonLoader.h"
 #include "CCParticleSystemQuadLoader.h"
 #include "CCScrollViewLoader.h"
+#include "CCTextFieldLoader.h"
+#include "CCSliderLoader.h"
 
 using namespace cocos2d;
 
@@ -35,6 +37,8 @@ void NodeLoaderLibrary::registerDefaultNodeLoaders() {
     this->registerNodeLoader("CCBFile", CCBFileLoader::loader());
     this->registerNodeLoader("CCButton", ControlButtonLoader::loader());
     this->registerNodeLoader("CCParticleSystemQuad", ParticleSystemQuadLoader::loader());
+    this->registerNodeLoader("CCTextField", EditBoxLoader::loader());
+    this->registerNodeLoader("CCSlider", SliderLoader::loader());
 }
 
 void NodeLoaderLibrary::registerNodeLoader(const char * pClassName, NodeLoader * pNodeLoader) {

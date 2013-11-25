@@ -375,6 +375,8 @@ void NodeLoader::parseProperties(Node * pNode, Node * pParent, CCBReader * ccbRe
                 break;
         }
     }
+    
+    // this->onHnalderParsePropComplete();
 }
 
 Point NodeLoader::parsePropTypePosition(Node * pNode, Node * pParent, CCBReader * ccbReader, const char *pPropertyName)
@@ -495,52 +497,7 @@ Size NodeLoader::parsePropTypeSize(Node * pNode, Node * pParent, CCBReader * ccb
         }
             break;
     }
-    
-    /*
-    switch (type) 
-    {
-        case CCBReader::SizeType::ABSOLUTE:
-        {
-            break;
-        }
-        case CCBReader::SizeType::RELATIVE_CONTAINER:
-        {
-            width = containerSize.width - width;
-            height = containerSize.height - height;
-            break;
-        }
-        case CCBReader::SizeType::PERCENT:
-        {
-            width = (int)(containerSize.width * width);
-            height = (int)(containerSize.height * height);
-            break;
-        }
-        case CCBReader::SizeType::HORIZONTAL_PERCENT:
-        {
-            width = (int)(containerSize.width * width / 100.0f);
-            break;
-        }
-        case CCBReader::SizeType::VERTICAL_PERCENT:
-        {
-            height = (int)(containerSize.height * height / 100.0f);
-            break;
-        }
-        case CCBReader::SizeType::MULTIPLY_RESOLUTION:
-        {
-            float resolutionScale = CCBReader::getResolutionScale();
-            
-            width *= resolutionScale;
-            height *= resolutionScale;
-            break;
-        }
-        default:
-        {
-            log("Unknown CCB type.");
-        }
-            break;
-    }
-*/
-    
+
     return Size(width, height);
 }
 

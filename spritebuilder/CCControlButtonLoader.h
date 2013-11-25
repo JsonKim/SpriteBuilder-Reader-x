@@ -10,18 +10,48 @@ class CCBControlButton : public cocos2d::extension::ControlButton {
 public:
     static CCBControlButton* create();
     
-    virtual ~CCBControlButton() {}
+    CCBControlButton();
+    virtual ~CCBControlButton();
     
-    void setShadowOffset(const cocos2d::Size & size);
-    void setShadowColor(const cocos2d::Color4B & color);
-    void setShadowBlurRadius(float blurRadius);
-    void enableShadow();
-    void needsLayout();
+    /**
+     * Returns the title opacity used for a state.
+     *
+     * @param state The state that uses the specified opacity. The values are described
+     * in "CCControlState".
+     *
+     * @return The opacity of the title for the specified state.
+     */
+
+    virtual GLubyte getTitleOpacityForState(State state) const;
+
+    /**
+     * Sets the opacity of the title to use for the specified state.
+     *
+     * @param opacity The opacity of the title to use for the specified state.
+     * @param state The state that uses the specified opacity. The values are described
+     * in "CCControlState".
+     */
+    virtual void setTitleOpacityForState(GLubyte color, State state);
     
-private:
-    cocos2d::Size _shadowOffset;
-    cocos2d::Color4B _shadowColor;
-    float _shadowBlurRadius;
+    virtual void setFontColor(const cocos2d::Color4B & color);
+    virtual void setShadowOffset(const cocos2d::Size & size);
+    virtual void setShadowColor(const cocos2d::Color4B & color);
+    virtual void setShadowBlurRadius(float blurRadius);
+    virtual void enableShadow();
+    
+    virtual void setPreferredSize(cocos2d::Size size);
+    virtual void setMaxSize(cocos2d::Size size);
+    virtual void needsLayout();
+    
+protected:
+    CC_SYNTHESIZE_READONLY(cocos2d::Size, _maxSize, MaxSize);
+    CC_SYNTHESIZE_READONLY(cocos2d::Color4B, _fontColor, FontColor);
+    CC_SYNTHESIZE_READONLY(cocos2d::Size, _shadowOffset, shadowOffset);
+    CC_SYNTHESIZE_READONLY(cocos2d::Color4B, _shadowColor, shadowColor);
+    CC_SYNTHESIZE_READONLY(float, _shadowBlurRadius, shadowBlurRadius);
+
+    // <ControlState, CCBValue*>
+    CC_SYNTHESIZE_RETAIN(cocos2d::Dictionary*, _titleOpacityDispatchTable, TitleOpacityDispatchTable);
 };
 
 /* Forward declaration. */

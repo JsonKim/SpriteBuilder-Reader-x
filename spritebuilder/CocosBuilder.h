@@ -25,5 +25,6 @@
 #include "spritebuilder/CCScale9SpriteLoader.h"
 #include "spritebuilder/CCScrollViewLoader.h"
 #include "spritebuilder/CCSpriteLoader.h"
+#include "spritebuilder/CCTextFieldLoader.h"
 
 #endif // __EDITOR_SUPPORT_SPRITEBUILDER_H__
