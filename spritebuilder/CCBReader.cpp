@@ -53,6 +53,21 @@ void CCBFile::setCCBFileNode(Node *pNode)
 /*************************************************************************
  Implementation of CCBReader
  *************************************************************************/
+ 
+static CCBReader * sSharedCCBReader = NULL;
+  
+CCBReader* CCBReader::getInstance()
+{
+    if(sSharedCCBReader == NULL) {
+        sSharedCCBReader = new CCBReader(NodeLoaderLibrary::getInstance());
+    }
+    return sSharedCCBReader;
+}
+
+void CCBReader::end()
+{
+    CC_SAFE_DELETE(sSharedCCBReader);
+}
 
 CCBReader::CCBReader(NodeLoaderLibrary * pNodeLoaderLibrary, CCBMemberVariableAssigner * pCCBMemberVariableAssigner, CCBSelectorResolver * pCCBSelectorResolver, NodeLoaderListener * pNodeLoaderListener) 
 : _data(NULL)
@@ -1149,6 +1164,23 @@ void CCBReader::addOwnerOutletNode(Node *node)
         return;
     
     _ownerOutletNodes->addObject(node);
+}
+
+void CCBReader::addNodeByTagName(const char * name, Node *node)
+{
+    if (NULL == node)
+        return;
+
+    _nodeByTagName[name] = node;
+}
+
+cocos2d::Node* CCBReader::getNodeByTagName(const char * name) {
+    auto itr = _nodeByTagName.find(name);
+    if (itr == _nodeByTagName.end()) {
+        return NULL;
+    }
+    
+    return (*itr).second;
 }
 
 /************************************************************************

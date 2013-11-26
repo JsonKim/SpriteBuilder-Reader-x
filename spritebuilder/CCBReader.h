@@ -157,6 +157,10 @@ public:
         ABSOLUTE,
         MULTIPLY_RESOLUTION
     };
+    
+    static CCBReader* getInstance();
+    static void end();
+    
     /**
      * @js NA
      * @lua NA
@@ -351,6 +355,9 @@ public:
     
     void addOwnerOutletName(std::string name);
     void addOwnerOutletNode(cocos2d::Node *node);
+    
+    void addNodeByTagName(const char * name, cocos2d::Node *node);
+    cocos2d::Node * getNodeByTagName(const char * name);
 
 private:
     void cleanUpNodeGraph(cocos2d::Node *pNode);
@@ -400,6 +407,8 @@ private:
     cocos2d::Array* _ownerCallbackNodes;
     cocos2d::Array* _ownerOwnerCallbackControlEvents;
     std::string _CCBRootPath;
+    
+    std::map<std::string, cocos2d::Node*> _nodeByTagName;
     
     bool _jsControlled;
 };

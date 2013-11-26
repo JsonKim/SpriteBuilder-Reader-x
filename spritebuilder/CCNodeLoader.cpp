@@ -1195,9 +1195,15 @@ void NodeLoader::onHandlePropTypeFntFile(Node * pNode, Node * pParent, const cha
 }
 
 void NodeLoader::onHandlePropTypeString(Node * pNode, Node * pParent, const char* pPropertyName, const char * pString, CCBReader * ccbReader) {
+    if(strcmp(pPropertyName, PROPERTY_TAG) == 0) {
+        if (strlen(pString) > 0) {
+            ccbReader->addNodeByTagName(pString, pNode);
+        }
+    } else {
 //    ASSERT_FAIL_UNEXPECTED_PROPERTY(pPropertyName);
     // It may be a custom property, add it to custom property dictionary.
-    _customProperties->setObject(CCBValue::create(pString), pPropertyName);
+        _customProperties->setObject(CCBValue::create(pString), pPropertyName);
+    }
 }
 
 void NodeLoader::onHandlePropTypeText(Node * pNode, Node * pParent, const char* pPropertyName, const char * pText, CCBReader * ccbReader) {
